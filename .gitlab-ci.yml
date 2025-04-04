@@ -3,9 +3,8 @@ stages:
 
 security_scan:
   stage: security_scan
-  image: mcr.microsoft.com/powershell:latest
   script:
-    - pwsh security_scan.ps1
+    - pwsh SecurityScan.ps1
   before_script:
     - echo "Running security scan with Fortify..."
   only:
