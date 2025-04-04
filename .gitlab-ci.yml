@@ -1,0 +1,24 @@
+stages:
+  - retrieve
+  - analyze
+
+variables:
+  FORTIFY_SSC_URL: "$(fortifySscUrl)"
+  ACCESS_TOKEN: "$(accessToken)"
+  APPLICATION_NAME: "$(applicationName)"
+  PROJECT_NAME: "$(projectName)"
+  RISK_LEVEL: "$(riskLevel)"
+  RISK_TOLERANCE: "$(riskTolerance)"
+  CATEGORIZATION_NAME: "$(categorizationName)"
+  BUILD_ARTIFACT_REPO_NAME: "$(buildArtifactRepoName)"
+
+retrieve_application_id:
+  stage: retrieve
+  script:
+    - pwsh scripts/Script902.ps1
+
+analyze_scan_results:
+  stage: analyze
+  script:
+    - pwsh scripts/Script902.ps1
+  when: on_success
