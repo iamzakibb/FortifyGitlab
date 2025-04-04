@@ -1,24 +1,12 @@
 stages:
-  - retrieve
-  - analyze
+  - security_scan
 
-variables:
-  FORTIFY_SSC_URL: "$(fortifySscUrl)"
-  ACCESS_TOKEN: "$(accessToken)"
-  APPLICATION_NAME: "$(applicationName)"
-  PROJECT_NAME: "$(projectName)"
-  RISK_LEVEL: "$(riskLevel)"
-  RISK_TOLERANCE: "$(riskTolerance)"
-  CATEGORIZATION_NAME: "$(categorizationName)"
-  BUILD_ARTIFACT_REPO_NAME: "$(buildArtifactRepoName)"
-
-retrieve_application_id:
-  stage: retrieve
+security_scan:
+  stage: security_scan
+  image: mcr.microsoft.com/powershell:latest
   script:
-    - pwsh scripts/Script902.ps1
-
-analyze_scan_results:
-  stage: analyze
-  script:
-    - pwsh scripts/Script902.ps1
-  when: on_success
+    - pwsh security_scan.ps1
+  before_script:
+    - echo "Running security scan with Fortify..."
+  only:
+    - main
